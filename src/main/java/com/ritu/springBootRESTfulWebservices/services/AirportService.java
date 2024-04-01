@@ -1,10 +1,7 @@
 package com.ritu.springBootRESTfulWebservices.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
-
 import com.ritu.springBootRESTfulWebservices.models.Airport;
 import com.ritu.springBootRESTfulWebservices.repos.AirportRepository;
 import com.ritu.springBootRESTfulWebservices.utils.Util;
@@ -35,6 +32,7 @@ public class AirportService
         return airportRepository.save(airport);
     }
 
+    @SuppressWarnings("unused")
     public List<Airport> getAirports()
     {
         Iterable<Airport> airports = airportRepository.findAll();

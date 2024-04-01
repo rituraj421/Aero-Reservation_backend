@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api/public")
+@RequestMapping("/ritu")
 public class RESTController
 {
     private final AirportService airportService;

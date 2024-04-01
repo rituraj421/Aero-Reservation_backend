@@ -1,4 +1,4 @@
-package com.hamidur.springBootRESTfulWebservices;
+package com.ritu.springBootRESTfulWebservices;
 
 class RESTfulSpringBootMicroserviceApplicationTests {
 }
