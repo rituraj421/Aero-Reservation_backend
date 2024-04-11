@@ -1,12 +1,12 @@
 package com.ritu.springBootRESTfulWebservices.repos;
 
+
+import com.ritu.springBootRESTfulWebservices.models.Reservation;
+import com.ritu.springBootRESTfulWebservices.models.Status;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-
-import com.ritu.springBootRESTfulWebservices.models.Reservation;
-import com.ritu.springBootRESTfulWebservices.models.Status;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;

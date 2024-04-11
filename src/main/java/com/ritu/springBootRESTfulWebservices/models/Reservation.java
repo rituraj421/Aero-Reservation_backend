@@ -1,5 +1,6 @@
 package com.ritu.springBootRESTfulWebservices.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -19,7 +20,8 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "reservations")
-public class Reservation {
+public class Reservation
+{
     @Id
     @Column(name = "reservation_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +41,7 @@ public class Reservation {
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
 
-    public Reservation() {
-    }
+    public Reservation() {}
 
     public Integer getRsvpId() {
         return rsvpId;
@@ -84,10 +85,8 @@ public class Reservation {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof Reservation))
-            return false;
+        if (this == o) return true;
+        if (!(o instanceof Reservation)) return false;
         Reservation that = (Reservation) o;
         return Objects.equals(getRsvpId(), that.getRsvpId()) &&
                 Objects.equals(getRsvpDate(), that.getRsvpDate()) &&

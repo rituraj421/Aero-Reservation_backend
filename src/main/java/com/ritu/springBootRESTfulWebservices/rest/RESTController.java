@@ -281,11 +281,26 @@ public class RESTController
     @PostMapping(value = "/rsvp/customer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> addRSVPByCustomerId(@RequestBody Map<String, Object> json)
     {
-    
-        
-                   return  new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-        
-        
+        // try
+        // {
+            return reservationService.addRSVPByCustomerId(json) ? new ResponseEntity<>(true, HttpStatus.OK) :
+                    new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        // }
+        // catch (IllegalArgumentException ex)
+        // {
+        //     InvalidRequestException response = new InvalidRequestException(HttpStatus.CHECKPOINT.value(), ex.getMessage());
+        //     return new ResponseEntity<>(response, HttpStatus.CHECKPOINT);
+        // }
+        // catch (InvalidRequestException ex)
+        // {
+        //     InvalidRequestExceptionResponse response = new InvalidRequestExceptionResponse(ex);
+        //     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        // }
+        // catch (NoSuchElementException ex)
+        // {
+        //     InvalidRequestExceptionResponse response = new InvalidRequestExceptionResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+        //     return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        // }
     }
 
     @PostMapping(value = "/airport", produces = MediaType.APPLICATION_JSON_VALUE)
