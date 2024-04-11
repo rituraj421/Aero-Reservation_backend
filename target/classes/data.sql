@@ -18,88 +18,88 @@ insert into customers (first_name, last_name, email) values
 insert into sources (date_time, airport_id) values ('2024-03-13 11:30:34', 1);
 insert into destinations (date_time, airport_id) values ('2024-03-13 13:35:56', 2);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('1AI1', 1, 1, 1, 45.50, 10, 'ON_TIME');
+values ('1AI1', 1, 1, 1, 45.50, 100, 'ON_TIME');
 
 insert into sources (date_time, airport_id) values ('2020-01-15 9:30:34', 2);
 insert into destinations (date_time, airport_id) values ('2020-01-15 13:35:56', 3);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('2AI2', 2, 2, 5, 50.75, 5, 'ON_TIME');
+values ('2AI2', 2, 2, 5, 50.75, 50, 'ON_TIME');
 
 insert into sources (date_time, airport_id) values ('2024-03-13 11:30:34', 3);
 insert into destinations (date_time, airport_id) values ('2024-03-13 13:35:56', 4);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('3AI3', 3, 3, 9, 45.50, 10, 'ON_TIME');
+values ('3AI3', 3, 3, 9, 45.50, 100, 'ON_TIME');
 
 insert into sources (date_time, airport_id) values ('2020-01-15 9:30:34', 4);
 insert into destinations (date_time, airport_id) values ('2020-01-15 13:35:56', 1);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('4AI4', 4, 4, 13, 50.75, 5, 'ON_TIME');
+values ('4AI4', 4, 4, 13, 50.75, 50, 'ON_TIME');
 
 --
 
 insert into sources (date_time, airport_id) values ('2024-03-13 11:30:34', 2);
 insert into destinations (date_time, airport_id) values ('2024-03-13 13:35:56', 4);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('5AI5', 5, 5, 2, 55.50, 10, 'ON_TIME');
+values ('5AI5', 5, 5, 2, 55.50, 100, 'ON_TIME');
 
 insert into sources (date_time, airport_id) values ('2020-01-15 9:30:34', 1);
 insert into destinations (date_time, airport_id) values ('2020-01-15 13:35:56', 3);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('6AI6', 6, 6, 6, 57.75, 5, 'ON_TIME');
+values ('6AI6', 6, 6, 6, 57.75, 50, 'ON_TIME');
 
 insert into sources (date_time, airport_id) values ('2024-03-13 11:30:34', 3);
 insert into destinations (date_time, airport_id) values ('2024-03-13 13:35:56', 2);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('7AI7', 7, 7, 10, 58.50, 10, 'ON_TIME');
+values ('7AI7', 7, 7, 10, 58.50, 100, 'ON_TIME');
 
 insert into sources (date_time, airport_id) values ('2020-01-15 9:30:34', 4);
 insert into destinations (date_time, airport_id) values ('2020-01-15 13:35:56', 1);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('8AI8', 8, 8, 14, 54.75, 5, 'ON_TIME');
+values ('8AI8', 8, 8, 14, 54.75, 50, 'ON_TIME');
 
 --
 
 insert into sources (date_time, airport_id) values ('2024-03-13 11:30:34', 4);
 insert into destinations (date_time, airport_id) values ('2024-03-13 13:35:56', 3);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('9AI9', 9, 9, 3, 68.50, 10, 'ON_TIME');
+values ('9AI9', 9, 9, 3, 68.50, 100, 'ON_TIME');
 
 insert into sources (date_time, airport_id) values ('2020-01-15 9:30:34', 3);
 insert into destinations (date_time, airport_id) values ('2020-01-15 13:35:56', 1);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('10AI', 10, 10, 7, 69.75, 5, 'ON_TIME');
+values ('10AI', 10, 10, 7, 69.75, 50, 'ON_TIME');
 
 insert into sources (date_time, airport_id) values ('2024-03-13 11:30:34', 1);
 insert into destinations (date_time, airport_id) values ('2024-03-13 13:35:56', 2);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('11AI', 11, 11, 11, 67.50, 10, 'ON_TIME');
+values ('11AI', 11, 11, 11, 67.50, 100, 'ON_TIME');
 
 insert into sources (date_time, airport_id) values ('2020-01-15 9:30:34', 2);
 insert into destinations (date_time, airport_id) values ('2020-01-15 13:35:56', 4);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('12AI', 12, 12, 15, 68.75, 5, 'ON_TIME');
+values ('12AI', 12, 12, 15, 68.75, 50, 'ON_TIME');
 
 --
 
 insert into sources (date_time, airport_id) values ('2024-03-13 11:30:34', 1);
 insert into destinations (date_time, airport_id) values ('2024-03-13 13:35:56', 4);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('13AI', 13, 13, 4, 90.00, 10, 'ON_TIME');
+values ('13AI', 13, 13, 4, 90.00, 100, 'ON_TIME');
 
 insert into sources (date_time, airport_id) values ('2020-01-15 9:30:34', 2);
 insert into destinations (date_time, airport_id) values ('2020-01-15 13:35:56', 3);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('14AI', 14, 14, 8, 94.25, 5, 'ON_TIME');
+values ('14AI', 14, 14, 8, 94.25, 50, 'ON_TIME');
 
 insert into sources (date_time, airport_id) values ('2024-03-13 11:30:34', 3);
 insert into destinations (date_time, airport_id) values ('2024-03-13 13:35:56', 1);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('15AI', 15, 15, 12, 93.99, 10, 'ON_TIME');
+values ('15AI', 15, 15, 12, 93.99, 100, 'ON_TIME');
 
 insert into sources (date_time, airport_id) values ('2020-01-15 9:30:34', 4);
 insert into destinations (date_time, airport_id) values ('2020-01-15 13:35:56', 2);
 insert into flights (flight_code, source_id, destination_id, airplane_id, fare, capacity, status)
-values ('16AI', 16, 16, 16, 91.75, 5, 'ON_TIME');
+values ('16AI', 16, 16, 16, 91.75, 50, 'ON_TIME');
 
 --
 
