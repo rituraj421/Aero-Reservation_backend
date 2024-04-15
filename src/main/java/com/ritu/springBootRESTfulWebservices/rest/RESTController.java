@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.ritu.springBootRESTfulWebservices.errorHandling.badReq;
+import com.ritu.springBootRESTfulWebservices.errorHandling.badReqResponse;
 import com.ritu.springBootRESTfulWebservices.models.Airline;
 import com.ritu.springBootRESTfulWebservices.models.Airplane;
 import com.ritu.springBootRESTfulWebservices.models.Airport;
@@ -30,6 +32,7 @@ import com.ritu.springBootRESTfulWebservices.utils.Util;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @RestController
@@ -241,9 +244,19 @@ public class RESTController {
 
     @PostMapping(value = "/rsvp/customer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Object> addRSVPByCustomerId(@RequestBody Map<String, Object> json) {
-        return reservationService.addRSVPByCustomerId(json) ? new ResponseEntity<>(true, HttpStatus.OK)
-                : new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-
+        try {
+            return reservationService.addRSVPByCustomerId(json) ? new ResponseEntity<>(true, HttpStatus.OK)
+                    : new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        } catch (IllegalArgumentException ex) {
+            badReq response = new badReq(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (badReq ex) {
+            badReqResponse response = new badReqResponse(ex);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        } catch (NoSuchElementException ex) {
+            badReqResponse response = new badReqResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping(value = "/airport", produces = MediaType.APPLICATION_JSON_VALUE)
