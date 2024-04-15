@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ritu.springBootRESTfulWebservices.models.Flight;
-import com.ritu.springBootRESTfulWebservices.models.Source;
 import com.ritu.springBootRESTfulWebservices.models.Status;
 import com.ritu.springBootRESTfulWebservices.repos.FlightRepository;
 import com.ritu.springBootRESTfulWebservices.utils.Util;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Optional;

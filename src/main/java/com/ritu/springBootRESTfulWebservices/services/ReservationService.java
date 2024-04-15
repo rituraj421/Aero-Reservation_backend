@@ -1,7 +1,6 @@
 package com.ritu.springBootRESTfulWebservices.services;
 
 import com.ritu.springBootRESTfulWebservices.errorHandling.badReq;
-// import com.ritu.springBootRESTfulWebservices.errors.badReq;
 import com.ritu.springBootRESTfulWebservices.models.Customer;
 import com.ritu.springBootRESTfulWebservices.models.Flight;
 import com.ritu.springBootRESTfulWebservices.models.Reservation;
@@ -61,7 +60,7 @@ public class ReservationService
             if(flight == null) throw new NoSuchElementException("Flight does not exists with id="+flightId);
 
             if(flight.getStatus().equalsIgnoreCase(Status.CANCELLED.toString()))
-                throw new badReq(HttpStatus.CHECKPOINT.value(), "Cannot rsvp to a cancelled flight.");
+                throw new badReq();
             if(flight.getCapacity() > flight.getCustomers().size())
             {
                 reservationRepository.insertRSVPByCustomerId(Util.toDBDateTime(LocalDateTime.now()), Status.ACTIVE.toString(), customerId, flightId);

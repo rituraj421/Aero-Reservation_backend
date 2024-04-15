@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ritu.springBootRESTfulWebservices.models.Customer;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 @Repository
 public interface CustomerRepository extends CrudRepository<Customer, Integer>
