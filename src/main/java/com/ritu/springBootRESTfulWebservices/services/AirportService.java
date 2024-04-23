@@ -21,7 +21,6 @@ public class AirportService
         this.airportRepository = airportRepository;
     }
 
-    @SuppressWarnings("null")
     public Airport addAirport(Airport airport) throws IllegalArgumentException, NullPointerException
     {
         if(Util.validateAirport(airport) && airport.getAirportId() != null && airport.getAirportId() > 0)

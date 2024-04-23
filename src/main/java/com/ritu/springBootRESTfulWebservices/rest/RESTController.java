@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.ritu.springBootRESTfulWebservices.errorHandling.badReq;
+import com.ritu.springBootRESTfulWebservices.errorHandling.badReqResponse;
 import com.ritu.springBootRESTfulWebservices.models.Airline;
 import com.ritu.springBootRESTfulWebservices.models.Airplane;
 import com.ritu.springBootRESTfulWebservices.models.Airport;
@@ -30,12 +32,12 @@ import com.ritu.springBootRESTfulWebservices.utils.Util;
 
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/ritu")
-public class RESTController
-{
+public class RESTController {
     private final AirportService airportService;
     private final AirlineService airlineService;
     private final AirplaneService airplaneService;
@@ -45,9 +47,8 @@ public class RESTController
 
     @Autowired
     public RESTController(final AirportService airportService, final AirlineService airlineService,
-                          final AirplaneService airplaneService, final CustomerService customerService,
-                          final FlightService flightService, final ReservationService reservationService)
-    {
+            final AirplaneService airplaneService, final CustomerService customerService,
+            final FlightService flightService, final ReservationService reservationService) {
         this.airportService = airportService;
         this.airlineService = airlineService;
         this.airplaneService = airplaneService;
@@ -57,274 +58,236 @@ public class RESTController
     }
 
     @GetMapping(value = "/airports", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Airport>> getAirports()
-    {
+    public ResponseEntity<List<Airport>> getAirports() {
         List<Airport> airports = airportService.getAirports();
-        return airports != null ? new ResponseEntity<>(airports, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return airports != null ? new ResponseEntity<>(airports, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/airport/{airportName}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Airport> getAirportByName(@PathVariable String airportName)
-    {
-        try
-        {
+    public ResponseEntity<Airport> getAirportByName(@PathVariable String airportName) {
+        try {
             Airport airport = null;
-            if(Util.validateAirportName(airportName))
-            {
+            if (Util.validateAirportName(airportName)) {
                 airport = airportService.getAirportByName(airportName);
             }
-            return airport != null ? new ResponseEntity<>(airport, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch (IllegalArgumentException ex)
-        {
+            return airport != null ? new ResponseEntity<>(airport, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
         }
     }
 
     @GetMapping(value = "/airlines", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Airline>> getAirlines()
-    {
+    public ResponseEntity<List<Airline>> getAirlines() {
         List<Airline> airlines = airlineService.getAirlines();
-        return airlines != null ? new ResponseEntity<>(airlines, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return airlines != null ? new ResponseEntity<>(airlines, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/airline/{airlineName}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Airline> getAirlineByName(@PathVariable String airlineName)
-    {
-        try
-        {
+    public ResponseEntity<Airline> getAirlineByName(@PathVariable String airlineName) {
+        try {
             Airline airline = null;
-            if(Util.validateAirlineName(airlineName))
-            {
+            if (Util.validateAirlineName(airlineName)) {
                 airline = airlineService.getAirlineByName(airlineName);
             }
-            return airline != null ? new ResponseEntity<>(airline, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch (IllegalArgumentException ex)
-        {
+            return airline != null ? new ResponseEntity<>(airline, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
         }
     }
 
     @GetMapping(value = "/airline/{airlineName}/airplanes", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<Airplane>> getAirplanesByAirlineName(@PathVariable String airlineName)
-    {
-        try
-        {
+    public ResponseEntity<Set<Airplane>> getAirplanesByAirlineName(@PathVariable String airlineName) {
+        try {
             Set<Airplane> airplanes = null;
-            if(Util.validateAirlineName(airlineName)) airplanes = airlineService.getAirplanesByAirlineName(airlineName);
-            return airplanes != null ? new ResponseEntity<>(airplanes, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch (IllegalArgumentException ex)
-        {
+            if (Util.validateAirlineName(airlineName))
+                airplanes = airlineService.getAirplanesByAirlineName(airlineName);
+            return airplanes != null ? new ResponseEntity<>(airplanes, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
         }
     }
 
     @GetMapping(value = "/airplanes", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Airplane>> getAirplanes()
-    {
+    public ResponseEntity<List<Airplane>> getAirplanes() {
         List<Airplane> airplanes = airplaneService.getAirplanes();
-        return airplanes != null ? new ResponseEntity<>(airplanes, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return airplanes != null ? new ResponseEntity<>(airplanes, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/customers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<Customer>> getCustomers()
-    {
+    public ResponseEntity<Set<Customer>> getCustomers() {
         Set<Customer> customers = customerService.getCustomers();
-        return customers != null ? new ResponseEntity<>(customers, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return customers != null ? new ResponseEntity<>(customers, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/customer/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> getCustomerByEmail(@PathVariable String email)
-    {
+    public ResponseEntity<Customer> getCustomerByEmail(@PathVariable String email) {
         Customer customer = customerService.getCustomerByEmail(email);
-        return customer != null ? new ResponseEntity<>(customer, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return customer != null ? new ResponseEntity<>(customer, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(value = "/flights", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<Flight>> getFlights()
-    {
+    public ResponseEntity<Set<Flight>> getFlights() {
         Set<Flight> flights = flightService.getFlights();
-        return flights != null ? new ResponseEntity<>(flights, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return flights != null ? new ResponseEntity<>(flights, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/flight/{flightId}")
-    public ResponseEntity<Flight> get(@PathVariable Integer flightId)
-    {
-        try
-        {
+    public ResponseEntity<Flight> get(@PathVariable Integer flightId) {
+        try {
             Flight flight = null;
-            if(Util.validateNumber(flightId)) flight = flightService.getFlightById(flightId);
-            return flight != null ? new ResponseEntity<>(flight, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch (IllegalArgumentException ex)
-        {
+            if (Util.validateNumber(flightId))
+                flight = flightService.getFlightById(flightId);
+            return flight != null ? new ResponseEntity<>(flight, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage());
         }
     }
 
     @GetMapping(value = "/flights/today", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<Flight>> getFlightsByToday()
-    {
+    public ResponseEntity<Set<Flight>> getFlightsByToday() {
         Set<Flight> flights = flightService.getFlightsForToday();
-        return flights != null ? new ResponseEntity<>(flights, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return flights != null ? new ResponseEntity<>(flights, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/flights/{date}")
-    public ResponseEntity<Set<Flight>> getFlightsByDate(@PathVariable String date)
-    {
-        try
-        {
+    public ResponseEntity<Set<Flight>> getFlightsByDate(@PathVariable String date) {
+        try {
             Set<Flight> flights = flightService.getFlightsByDate(Util.stringDateToDateTime(date));
-            return flights != null ? new ResponseEntity<>(flights, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        catch (IllegalArgumentException ex)
-        {
+            return flights != null ? new ResponseEntity<>(flights, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         }
     }
 
     @GetMapping(value = "/flights/fare/{fare}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<Flight>> getFlightsByFare(@PathVariable Float fare)
-    {
+    public ResponseEntity<Set<Flight>> getFlightsByFare(@PathVariable Float fare) {
         Set<Flight> flights = flightService.getFlightsByFare(fare);
-        return flights != null && !flights.isEmpty() ? new ResponseEntity<>(flights, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return flights != null && !flights.isEmpty() ? new ResponseEntity<>(flights, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/flights/status/{status}")
-    public ResponseEntity<Set<Flight>> getFlightsByStatus(@PathVariable String status)
-    {
-        try
-        {
+    public ResponseEntity<Set<Flight>> getFlightsByStatus(@PathVariable String status) {
+        try {
             Set<Flight> flights = flightService.getFlightsByStats(status);
-            return flights != null ? new ResponseEntity<>(flights, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        catch (IllegalArgumentException ex)
-        {
+            return flights != null ? new ResponseEntity<>(flights, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         }
     }
 
     @GetMapping(value = "/rsvps/customer/{customerId}")
-    public ResponseEntity<Set<Reservation>> getAllRSVPsByCustomerId(@PathVariable Integer customerId)
-    {
-        try
-        {
+    public ResponseEntity<Set<Reservation>> getAllRSVPsByCustomerId(@PathVariable Integer customerId) {
+        try {
             Set<Reservation> reservations = reservationService.getAllRSVPsByCustomerId(customerId);
-            return reservations != null ? new ResponseEntity<>(reservations, HttpStatus.OK) :
-                    new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch (IllegalArgumentException ex)
-        {
+            return reservations != null ? new ResponseEntity<>(reservations, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         }
     }
 
     @GetMapping(value = "/rsvps/cancelled", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<Reservation>> getAllCancelledRSVPs()
-    {
+    public ResponseEntity<Set<Reservation>> getAllCancelledRSVPs() {
         Set<Reservation> reservations = reservationService.getAllCancelledRSVPs();
-        return reservations != null ? new ResponseEntity<>(reservations, HttpStatus.OK) :
-                new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return reservations != null ? new ResponseEntity<>(reservations, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = "/rsvps/{airline}/active", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<Reservation>> getAllActiveRSVPsByAirline(@PathVariable String airline)
-    {
-        try
-        {
+    public ResponseEntity<Set<Reservation>> getAllActiveRSVPsByAirline(@PathVariable String airline) {
+        try {
             Set<Reservation> reservations = reservationService.getAllActiveRSVPsByAirline(airline);
-            return reservations != null ? new ResponseEntity<>(reservations, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        catch (IllegalArgumentException ex)
-        {
+            return reservations != null ? new ResponseEntity<>(reservations, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         }
     }
 
     @GetMapping(value = "/rsvps/{airline}/cancelled", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Set<Reservation>> getAllCancelledRSVPsByAirline(@PathVariable String airline)
-    {
-        try
-        {
+    public ResponseEntity<Set<Reservation>> getAllCancelledRSVPsByAirline(@PathVariable String airline) {
+        try {
             Set<Reservation> reservations = reservationService.getAllCancelledRSVPsByAirline(airline);
-            return reservations != null ? new ResponseEntity<>(reservations, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        catch (IllegalArgumentException ex)
-        {
+            return reservations != null ? new ResponseEntity<>(reservations, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         }
     }
 
     @PostMapping(value = "/flight", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Flight> insertFlight(@RequestBody Flight flight)
-    {
-        try
-        {
+    public ResponseEntity<Flight> insertFlight(@RequestBody Flight flight) {
+        try {
             return new ResponseEntity<>(flightService.addFlight(flight), HttpStatus.OK);
-        }
-        catch (IllegalArgumentException ex)
-        {
+        } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
-        }
-        catch (NullPointerException ex)
-        {
+        } catch (NullPointerException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         }
     }
 
     @PostMapping(value = "/rsvp/customer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> addRSVPByCustomerId(@RequestBody Map<String, Object> json)
-    {
-    
-        
-                   return  new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-        
-        
+    public ResponseEntity<Object> addRSVPByCustomerId(@RequestBody Map<String, Object> json) {
+        try {
+            return reservationService.addRSVPByCustomerId(json) ? new ResponseEntity<>(true, HttpStatus.OK)
+                    : new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        } catch (IllegalArgumentException ex) {
+            badReq response = new badReq(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (badReq ex) {
+            badReqResponse response = new badReqResponse(ex);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        } catch (NoSuchElementException ex) {
+            badReqResponse response = new badReqResponse(HttpStatus.NOT_FOUND.value(), ex.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping(value = "/airport", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Airport> addAirport(@RequestBody Airport airport)
-    {
+    public ResponseEntity<Airport> addAirport(@RequestBody Airport airport) {
         Airport addedAirport = airportService.addAirport(airport);
-        return addedAirport != null ? new ResponseEntity<>(airport, HttpStatus.CREATED) : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return addedAirport != null ? new ResponseEntity<>(airport, HttpStatus.CREATED)
+                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(value = "/rsvp/cancel/{rsvpId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> cancelRSVPByCustomerId(@PathVariable Integer rsvpId)
-    {
-        try
-        {
+    public ResponseEntity<Boolean> cancelRSVPByCustomerId(@PathVariable Integer rsvpId) {
+        try {
             boolean isCancelled = reservationService.cancelRSVPByCustomerId(rsvpId);
             return isCancelled ? new ResponseEntity<>(true, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        catch (IllegalArgumentException ex)
-        {
+        } catch (IllegalArgumentException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
         }
     }
 
     @PutMapping(value = "/flight/cancel/{flightId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> cancelFlightById(@PathVariable Integer flightId)
-    {
-        return flightService.cancelFlight(flightId) ? new ResponseEntity<>(true, HttpStatus.OK) : new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
+    public ResponseEntity<Boolean> cancelFlightById(@PathVariable Integer flightId) {
+        return flightService.cancelFlight(flightId) ? new ResponseEntity<>(true, HttpStatus.OK)
+                : new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
     }
 
     @DeleteMapping(value = "/delete/customer/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> deleteCustomerById(@PathVariable Integer customerId)
-    {
-        try
-        {
-            return customerService.deleteCustomerById(customerId) ? new ResponseEntity<>(true, HttpStatus.OK) :
-                    new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
-        }
-        catch (Exception ex)
-        {
+    public ResponseEntity<Boolean> deleteCustomerById(@PathVariable Integer customerId) {
+        try {
+            return customerService.deleteCustomerById(customerId) ? new ResponseEntity<>(true, HttpStatus.OK)
+                    : new ResponseEntity<>(false, HttpStatus.EXPECTATION_FAILED);
+        } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.EXPECTATION_FAILED, ex.getMessage(), ex);
         }
     }

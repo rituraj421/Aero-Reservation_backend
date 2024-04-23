@@ -9,7 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.ritu.springBootRESTfulWebservices.models.Flight;
 import com.ritu.springBootRESTfulWebservices.models.Status;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.Set;
 
