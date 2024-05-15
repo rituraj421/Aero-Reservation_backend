@@ -1,5 +1,16 @@
 package com.ritu.springBootRESTfulWebservices.services;
 
+import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
 import com.ritu.springBootRESTfulWebservices.errorHandling.badReq;
 import com.ritu.springBootRESTfulWebservices.models.Customer;
 import com.ritu.springBootRESTfulWebservices.models.Flight;
@@ -7,16 +18,6 @@ import com.ritu.springBootRESTfulWebservices.models.Reservation;
 import com.ritu.springBootRESTfulWebservices.models.Status;
 import com.ritu.springBootRESTfulWebservices.repos.ReservationRepository;
 import com.ritu.springBootRESTfulWebservices.utils.Util;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ReservationService
@@ -45,33 +46,39 @@ public class ReservationService
     }
 
     public boolean addRSVPByCustomerId(Map<String, Object> json) throws badReq, NoSuchElementException
-    {
-        int customerId = -1;
-        int flightId = -1;
+{
+    int customerId = -1;
+    int flightId = -1;
 
-        if(Util.verifyRSVPByCustomerId(json))
-        {
-            customerId = (Integer) json.get(Util.CUSTOMER_ID_JKEY);
-            Customer customer = customerService.getCustomerById(customerId);
-            if(customer == null) throw new NoSuchElementException("Customer does not exists with id="+customerId);
+    Object customerIdObj = json.get(Util.CUSTOMER_ID_JKEY);
+    Object flightIdObj = json.get(Util.FLIGHT_ID_JKEY);
 
-            flightId = (Integer)json.get(Util.FLIGHT_ID_JKEY);
-            Flight flight = flightService.getFlightById(flightId);
-            if(flight == null) throw new NoSuchElementException("Flight does not exists with id="+flightId);
-
-            if(flight.getStatus().equalsIgnoreCase(Status.CANCELLED.toString()))
-                throw new badReq();
-            if(flight.getCapacity() > flight.getCustomers().size())
-            {
-                reservationRepository.insertRSVPByCustomerId(Util.toDBDateTime(LocalDateTime.now()), Status.ACTIVE.toString(), customerId, flightId);
-                flight.getCustomers().add(customer);
-                Flight updated = flightService.updateFlight(flight);
-                return updated.getFlightId().equals(flight.getFlightId());
-            }
-            else throw new badReq(HttpStatus.EXPECTATION_FAILED.value(),"Flight is full. Cannot do rsvp.");
-        }
-        return false;
+    if (customerIdObj instanceof Integer && flightIdObj instanceof Integer) {
+        customerId = (Integer) customerIdObj;
+        flightId = (Integer) flightIdObj;
+    } else {
+        throw new IllegalArgumentException("Invalid types for customer ID or flight ID");
     }
+
+    Customer customer = customerService.getCustomerById(customerId);
+    if(customer == null) throw new NoSuchElementException("Customer does not exist with id=" + customerId);
+
+    Flight flight = flightService.getFlightById(flightId);
+    if(flight == null) throw new NoSuchElementException("Flight does not exist with id=" + flightId);
+
+    if(flight.getStatus().equalsIgnoreCase(Status.CANCELLED.toString()))
+        throw new badReq();
+
+    if(flight.getCapacity() > flight.getCustomers().size())
+    {
+        reservationRepository.insertRSVPByCustomerId(Util.toDBDateTime(LocalDateTime.now()), Status.ACTIVE.toString(), customerId, flightId);
+        flight.getCustomers().add(customer);
+        Flight updated = flightService.updateFlight(flight);
+        return updated.getFlightId().equals(flight.getFlightId());
+    }
+    else throw new badReq(HttpStatus.EXPECTATION_FAILED.value(),"Flight is full. Cannot do rsvp.");
+}
+
 
     public boolean cancelRSVPByCustomerId(Integer rsvpId) throws IllegalArgumentException
     {
@@ -118,6 +125,13 @@ public class ReservationService
         return null;
     }
 
+    // get all rsvps (cancelled and active both)
+    public Set<Reservation> getAllRSVPs()
+    {
+        Iterable<Reservation> iterable = reservationRepository.findAllRSVPs();
+        return iterableToReservationSet(iterable);
+    }
+    
     private Set<Reservation> iterableToReservationSet(Iterable<Reservation> iterable)
     {
         if(iterable != null)

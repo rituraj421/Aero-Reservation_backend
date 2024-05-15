@@ -22,6 +22,10 @@ public interface ReservationRepository extends CrudRepository<Reservation, Integ
     // // Hibernate query from method name
     Set<Reservation> findReservationsByStatus(Status status);
 
+//     get all rsvps (cancelled and active both)
+        @Query(value = "select * from reservations ", nativeQuery = true)
+        Set<Reservation> findAllRSVPs();
+
     // native query - MySQL - inner join
     @Query(value = "select * from reservations r inner join flights f on f.flight_id in " +
             "(select flight_id from flights where airplane_id in " +
